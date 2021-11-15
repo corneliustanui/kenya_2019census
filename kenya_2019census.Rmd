@@ -53,6 +53,7 @@ library(ggplot2)
 library(ggpmisc)
 library(gmodels)
 library(magrittr)
+library(rKenyaCensus)
 
 ```
 
@@ -62,7 +63,7 @@ Row {.tabset .tabset-fade}
 --------------------------------------------------
 ### Data source
 
-This secondary data from Kenya Household and Population Census (KPHC) of 2019, made available in R by [Shelmith Kariuki](https://github.com/Shelmith-Kariuki/rKenyaCensus)
+This secondary data from Kenya Household and Population Census ([KPHC](https://www.knbs.or.ke/)) of 2019, made available in R by [Shelmith Kariuki.](https://github.com/Shelmith-Kariuki/rKenyaCensus)
 
 ### Data wrangling
 

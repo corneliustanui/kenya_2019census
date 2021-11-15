@@ -590,6 +590,13 @@
       "Repository": "CRAN",
       "Hash": "f4dbc5a47fd93d3415249884d31d6791"
     },
+    "packrat": {
+      "Package": "packrat",
+      "Version": "0.7.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "95e8c3825efcaad09411799da92c0af9"
+    },
     "pillar": {
       "Package": "pillar",
       "Version": "1.6.1",
@@ -674,6 +681,18 @@
       "Repository": "CRAN",
       "Hash": "28692dfa3efea8e19d29347d05f5a489"
     },
+    "rKenyaCensus": {
+      "Package": "rKenyaCensus",
+      "Version": "0.0.2",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "rKenyaCensus",
+      "RemoteUsername": "Shelmith-Kariuki",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "6db00e5b1b71a781e6def15dd98a4828b6d960bc",
+      "Hash": "f3adbc9eb9c62f9eb1d5e78c07807e34"
+    },
     "rappdirs": {
       "Package": "rappdirs",
       "Version": "0.3.3",
@@ -736,6 +755,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "912c09266d5470516df4df7a303cde92"
+    },
+    "rsconnect": {
+      "Package": "rsconnect",
+      "Version": "0.8.24",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "5e21fd77eb844fa1ff1d23cb04e1d753"
     },
     "rstudioapi": {
       "Package": "rstudioapi",

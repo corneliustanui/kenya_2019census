@@ -1,0 +1,13 @@
+name: kenya_2019census
+title: kenya_2019census
+username:
+account: corneliuskiplimo
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 5127017
+bundleId: 5253625
+url: https://corneliuskiplimo.shinyapps.io/kenya_2019census/
+when: 1636983146.77078
+lastSyncTime: 1636983146.77078
+asMultiple: FALSE
+asStatic: FALSE
