@@ -4,7 +4,7 @@ author: "Cornelius Tanui"
 output: 
   flexdashboard::flex_dashboard:
     orientation: rows
-    #social: menu
+    social: menu
     vertical_layout: scroll
     # source_code: embed
     logo: logo.jpg
@@ -41,7 +41,6 @@ graphics.off()
 rm(list = ls(all.names = TRUE))
 ```
 
-
 ```{r Load Packages, include = FALSE}
 # load Packages
 library(tidyverse)
@@ -54,7 +53,6 @@ library(ggpmisc)
 library(gmodels)
 library(magrittr)
 library(rKenyaCensus)
-
 ```
 
 Data
@@ -63,9 +61,13 @@ Row {.tabset .tabset-fade}
 --------------------------------------------------
 ### Data source
 
-This secondary data from Kenya Household and Population Census ([KPHC](https://www.knbs.or.ke/)) of 2019, made available in R by [Shelmith Kariuki.](https://github.com/Shelmith-Kariuki/rKenyaCensus)
+This secondary data from Kenya Household and Population Census ([KPHC](https://www.knbs.or.ke/)) of 2019, made available in R by [Shelmith Kariuki](https://shelkariuki.netlify.app/#about) via the [`rKenyaCensus`](https://github.com/Shelmith-Kariuki/rKenyaCensus) R package. 
 
 ### Data wrangling
+
+```{r}
+
+```
 
 Dashboards
 ==================================================
@@ -74,5 +76,12 @@ Row {.tabset .tabset-fade}
 
 ### Demographics
 
+```{r}
+
+```
 
 ### Health
+
+```{r}
+
+```
