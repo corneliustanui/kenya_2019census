@@ -69,13 +69,13 @@ Row {.tabset .tabset-fade}
 
 This secondary data from Kenya Household and Population Census ([KPHC](https://www.knbs.or.ke/)) of 2019, made available in R by [Shelmith Kariuki](https://shelkariuki.netlify.app/#about) through her elegantly written [`rKenyaCensus`](https://github.com/Shelmith-Kariuki/rKenyaCensus) package. 
 
-This Shiny application uses [`flexdashboard`](https://rstudio.github.io/flexdashboard/index.html) framework. 
+This Shiny application uses [`flexdashboard`](https://rstudio.github.io/flexdashboard/index.html) framework, and [plotly](https://plotly.com/) graphing library's [`ggplotly`](https://www.rdocumentation.org/packages/plotly/versions/4.10.0/topics/ggplotly) function for interactivity of [ggplot2](https://ggplot2.tidyverse.org/) objects. 
 
 ### Data 
 
-Data files avaliable for public use; 
+Data files available for public use; 
 
-```{r}
+```{r Describe data}
 data_description<- rKenyaCensus::DataCatalogue %>% 
   as.data.frame()
 
@@ -93,12 +93,64 @@ Row {.tabset .tabset-fade}
 
 ### Demographics
 
-```{r}
+```{r Socio-demographics}
+# Distribution of Population by Age, Sex, County and Sub- County
 
+# Remove unnecessary records 
+pp_age_sex_county <- rKenyaCensus::V3_T2.3 %>% 
+  filter(SubCounty != "ALL" & 
+           Age != "Total" & 
+           Age != "Not Stated" &
+           !grepl("-", Age)
+         )
+
+# For age above 100 years, replace with 100 
+pp_age_sex_county[pp_age_sex_county$Age == "100+", ]$Age <- "100"
+
+pp_age_sex_county$Age <- as.numeric(pp_age_sex_county$Age)
+
+# Transform data to long
+male <- pp_age_sex_county %>% 
+  select(County, SubCounty, Age, Male) %>% 
+  rename(Population = Male) %>% 
+  mutate(Gender = "Male")
+
+female <- pp_age_sex_county %>% 
+  select(County, SubCounty, Age, Female)%>% 
+  rename(Population = Female)%>% 
+  mutate(Gender = "Female")
+
+total <- pp_age_sex_county %>% 
+  select(County, SubCounty, Age, Total)%>% 
+  rename(Population = Total)%>% 
+  mutate(Gender = "Total")
+
+pp_age_sex_county_long <- bind_rows(male, female, total)
+
+# plot data (population  by age and sex)
+plot1 <- pp_age_sex_county_long %>% 
+  ggplot(aes(x = Age, y = Population)) +
+  geom_point() +
+  geom_jitter(color = "#009999") +
+  labs(x = "Age",
+       y = "Population",
+       title = "Population by Age and Sex",
+       caption = "Source: KHPC2019") +
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        panel.background = element_blank(),
+        axis.line = element_line(colour = "black"))+
+  facet_wrap(. ~ Gender)
+
+# Animate plot 
+plot1 <- ggplotly(plot1)
+
+plot1
 ```
 
 ### Health
 
-```{r}
+```{r Health}
 
 ```
