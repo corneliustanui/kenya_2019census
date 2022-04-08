@@ -43,6 +43,11 @@ rm(list = ls(all.names = TRUE))
 
 ```{r Load Packages, include = FALSE}
 # load Packages
+library(MASS)
+library(Matrix)
+library(lattice)
+library(mgcv)
+library(nlme)
 library(tidyverse)
 library(flexdashboard)
 library(shiny)
