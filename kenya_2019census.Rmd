@@ -43,6 +43,7 @@ rm(list = ls(all.names = TRUE))
 
 ```{r Load Packages, include = FALSE}
 # load Packages
+library(kableExtra)
 library(MASS)
 library(Matrix)
 library(lattice)
@@ -60,17 +61,28 @@ library(magrittr)
 library(rKenyaCensus)
 ```
 
-Data
+Home
 ==================================================
 Row {.tabset .tabset-fade}
 --------------------------------------------------
-### Data source
+### Introduction
 
-This secondary data from Kenya Household and Population Census ([KPHC](https://www.knbs.or.ke/)) of 2019, made available in R by [Shelmith Kariuki](https://shelkariuki.netlify.app/#about) via the [`rKenyaCensus`](https://github.com/Shelmith-Kariuki/rKenyaCensus) R package. 
+This secondary data from Kenya Household and Population Census ([KPHC](https://www.knbs.or.ke/)) of 2019, made available in R by [Shelmith Kariuki](https://shelkariuki.netlify.app/#about) through her elegantly written [`rKenyaCensus`](https://github.com/Shelmith-Kariuki/rKenyaCensus) package. 
 
-### Data wrangling
+This Shiny application uses [`flexdashboard`](https://rstudio.github.io/flexdashboard/index.html) framework. 
+
+### Data 
+
+Data files avaliable for public use; 
 
 ```{r}
+data_description<- rKenyaCensus::DataCatalogue %>% 
+  as.data.frame()
+
+data_description %>% 
+  kbl() %>% 
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>% 
+  scroll_box(width = "100%", height = "400px")
 
 ```
 
