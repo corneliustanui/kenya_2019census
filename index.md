@@ -2,7 +2,9 @@
 
 This page is still under development, be patient! 
 
-You can use the [editor on GitHub](https://github.com/corneliustanui/kenya_2019census/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+# Kenya 2019 Census
+
+EDA on __Kenya2019Census__ published by [![KNBS 2019 Census](logo-KNBS.png)](https://www.knbs.or.ke/?page_id=1591)
 
 ### Support or Contact
 
