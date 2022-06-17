@@ -5,9 +5,9 @@ account: corneliuskiplimo
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 6049267
-bundleId: 6017070
+bundleId: 6017305
 url: https://corneliuskiplimo.shinyapps.io/kenya_2019census/
-when: 1655469422.78232
-lastSyncTime: 1655469422.78235
+when: 1655474263.02059
+lastSyncTime: 1655474263.02064
 asMultiple: FALSE
 asStatic: FALSE
