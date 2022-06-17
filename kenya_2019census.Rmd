@@ -6,7 +6,7 @@ output:
     orientation: rows
     social: menu
     vertical_layout: scroll
-    # source_code: embed
+    source_code: https://github.com/corneliustanui/kenya_2019census
     logo: logo.jpg
     theme: lumen
 date: "`r Sys.Date()`"
@@ -103,7 +103,7 @@ data_description %>%
 
 ### Demographics
 
-```{r Socio-demographics}
+```{r data preparation}
 # Distribution of Population by Age, Sex, County and Sub- County
 
 # Remove unnecessary records 
@@ -143,8 +143,10 @@ pp_age_sex_county_long <- bind_rows(male, female, total)
 # scatterplot data (population  by age and sex)
 plot1 <- pp_age_sex_county_long %>% 
   slice_sample(n = 5000, replace = TRUE) %>% 
-  ggplot(aes(x = Age, y = log(Population))) +
-  geom_point(color = "#009999") +
+  ggplot(aes(x = Age, y = log(Population), 
+         color = Gender)) +
+  geom_point(position = "jitter") +
+  geom_smooth(method = "loess") +
   labs(x = "Age",
        y = "Population",
        title = "Population by Age and Sex",
@@ -153,17 +155,20 @@ plot1 <- pp_age_sex_county_long %>%
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), 
         panel.background = element_blank(),
-        axis.line = element_line(colour = "black"))+
-  facet_wrap(. ~ Gender)
+        axis.line = element_line(colour = "black"))
 
-# Animate plot 
-plot1 <- ggplotly(plot1)
+# Animate plot
+plot1 <- ggplotly(plot1, 
+                  width = 400, 
+                  height = 300)
 
-plot1
+plot1 
 ```
 
 
 ```{r density plot}
+
+
 # density plot data (population  by age and sex)
 plot2 <- pp_age_sex_county_long %>% 
   slice_sample(n = 5000, replace = TRUE) %>% 
@@ -179,12 +184,12 @@ plot2 <- pp_age_sex_county_long %>%
         panel.background = element_blank(),
         axis.line = element_line(colour = "black"))
 
-# Animate plot 
+# Animate plot
 plot2 <- ggplotly(plot2)
 
 plot2
-```
 
+```
 
 ### Health
 
