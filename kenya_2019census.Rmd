@@ -136,11 +136,14 @@ total <- pp_age_sex_county %>%
   mutate(Gender = "Total")
 
 pp_age_sex_county_long <- bind_rows(male, female, total)
+```
 
-# plot data (population  by age and sex)
+
+```{r scatterplot}
+# scatterplot data (population  by age and sex)
 plot1 <- pp_age_sex_county_long %>% 
   slice_sample(n = 5000, replace = TRUE) %>% 
-  ggplot(aes(x = Age, y = Population)) +
+  ggplot(aes(x = Age, y = log(Population))) +
   geom_point(color = "#009999") +
   labs(x = "Age",
        y = "Population",
@@ -158,6 +161,30 @@ plot1 <- ggplotly(plot1)
 
 plot1
 ```
+
+
+```{r density plot}
+# density plot data (population  by age and sex)
+plot2 <- pp_age_sex_county_long %>% 
+  slice_sample(n = 5000, replace = TRUE) %>% 
+  ggplot(aes(x = log(Population), fill = Gender)) +
+  geom_density(alpha = 0.4) +
+  labs(x = "Population (in log scale)",
+       y = "Density",
+       title = "Population by Age and Sex",
+       caption = "Source: KHPC2019") +
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        panel.background = element_blank(),
+        axis.line = element_line(colour = "black"))
+
+# Animate plot 
+plot2 <- ggplotly(plot2)
+
+plot2
+```
+
 
 ### Health
 
