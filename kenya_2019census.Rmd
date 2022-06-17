@@ -13,10 +13,12 @@ date: "`r Sys.Date()`"
 runtime: shiny
 ---
 
+```{=html}
 <!--
 # Customizing HTML Appearance
 -->
-
+```
+```{=html}
 <style>
 .navbar {
 background-color:#438D80;
@@ -34,7 +36,7 @@ color: #000000! important;
 }
 
 </style>
-
+```
 ```{r Clear Evrironment, include = FALSE}
 gc()
 graphics.off()
@@ -58,22 +60,23 @@ library(ggplot2)
 library(ggpmisc)
 library(gmodels)
 library(magrittr)
-library(rKenyaCensus)
+# devtools::install_github("Shelmith-Kariuki/rKenyaCensus")
+# library(rKenyaCensus)
 ```
 
-Home
-==================================================
-Row {.tabset .tabset-fade}
---------------------------------------------------
+# Home
+
+## Row {.tabset .tabset-fade}
+
 ### Introduction
 
-This secondary data from Kenya Household and Population Census ([KPHC](https://www.knbs.or.ke/)) of 2019, made available in R by [Shelmith Kariuki](https://shelkariuki.netlify.app/#about) through her elegantly written [`rKenyaCensus`](https://github.com/Shelmith-Kariuki/rKenyaCensus) package. 
+This secondary data from Kenya Household and Population Census ([KPHC](https://www.knbs.or.ke/)) of 2019, made available in R by [Shelmith Kariuki](https://shelkariuki.netlify.app/#about) through her elegantly written [`rKenyaCensus`](https://github.com/Shelmith-Kariuki/rKenyaCensus) package.
 
-This Shiny application uses [`flexdashboard`](https://rstudio.github.io/flexdashboard/index.html) framework, and [plotly](https://plotly.com/) graphing library's [`ggplotly`](https://www.rdocumentation.org/packages/plotly/versions/4.10.0/topics/ggplotly) function for interactivity of [ggplot2](https://ggplot2.tidyverse.org/) objects. 
+This Shiny application uses [`flexdashboard`](https://rstudio.github.io/flexdashboard/index.html) framework, and [plotly](https://plotly.com/) graphing library's [`ggplotly`](https://www.rdocumentation.org/packages/plotly/versions/4.10.0/topics/ggplotly) function for interactivity of [ggplot2](https://ggplot2.tidyverse.org/) objects.
 
-### Data 
+### Data
 
-Data files available for public use; 
+Data files available for public use;
 
 ```{r Describe data}
 data_description<- rKenyaCensus::DataCatalogue %>% 
@@ -86,10 +89,9 @@ data_description %>%
 
 ```
 
-Dashboards
-==================================================
-Row {.tabset .tabset-fade}
---------------------------------------------------
+# Dashboards
+
+## Row {.tabset .tabset-fade}
 
 ### Demographics
 
@@ -146,7 +148,7 @@ plot1 <- pp_age_sex_county_long %>%
 # Animate plot 
 plot1 <- ggplotly(plot1)
 
-plot1
+# plot1
 ```
 
 ### Health
