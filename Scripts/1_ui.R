@@ -77,8 +77,69 @@ ui <- dashboardPage(
               )
               ),
       
-      tabItem("info1", "Sub info 1"),
-      
+      tabItem("info1",
+              
+              column(width = 3,
+                box(
+                  width = NULL,
+                  title = "Filters",
+                  status = "warning",
+                  collapsible = TRUE,
+                  solidHeader = TRUE,
+                  
+                  shiny::selectInput(
+                    inputId = "county",
+                    label = "Select county",
+                    choices = unique(pp_age_sex_county_long$County),
+                    selected = unique(pp_age_sex_county_long$County),
+                    multiple = FALSE,
+                    selectize = FALSE
+                  ),
+                  
+                  shiny::sliderInput(
+                    inputId = "age",
+                    label = "Age", 
+                    min = min(pp_age_sex_county_long$Age, na.rm = T),
+                    max = max(pp_age_sex_county_long$Age, na.rm = T), 
+                    value = c(min(pp_age_sex_county_long$Age, na.rm = T), 
+                              max(pp_age_sex_county_long$Age, na.rm = T)),
+                    step = 5
+                  ),
+                  
+                  shiny::checkboxGroupInput(
+                    inputId = "gender",
+                    label = "Select gender",
+                    choices = unique(pp_age_sex_county_long$Gender), 
+                    selected = unique(pp_age_sex_county_long$Gender), 
+                    inline = T
+                  )
+                  
+                )
+              ),
+              
+              column(width = 9,
+                fluidRow(
+                  box(
+                    title = "Scatter Plot",
+                    status = "warning",
+                    collapsible = TRUE,
+                    solidHeader = TRUE,
+                    
+                    plotOutput("plot1")
+                    ),
+                  
+                  box(
+                    title = "Density Plot",
+                    status = "warning",
+                    collapsible = TRUE,
+                    solidHeader = TRUE,
+                    
+                    plotOutput("plot2")
+                    )
+                  )
+                )
+              ),
+              
       tabItem("info2", "Sub info 2"),
       
       tabItem("info3", "Sub info 3"),
