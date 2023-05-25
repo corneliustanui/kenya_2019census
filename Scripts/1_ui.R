@@ -72,6 +72,10 @@ ui <- dashboardPage(
                   width = 12,
                   height = 5,
                   
+                  tags$head(tags$style(".butt1{background-color:#FFAD00} .butt1{color: #FFFFFF;}")),
+                  div(style = "display:inline-block; width:30#; text-align: center;",
+                      downloadButton("download_data_cat", label = "Download csv", class = "butt1")),
+
                   DTOutput("data_description")
                 )
               )
@@ -79,7 +83,7 @@ ui <- dashboardPage(
       
       tabItem("info1",
               
-              column(width = 3,
+              column(width = 2,
                 box(
                   width = NULL,
                   title = "Filters",
@@ -111,13 +115,16 @@ ui <- dashboardPage(
                     label = "Select gender",
                     choices = unique(pp_age_sex_county_long$Gender), 
                     selected = unique(pp_age_sex_county_long$Gender), 
-                    inline = T
+                    inline = FALSE
                   )
-                  
-                )
+                ),
+                tags$head(tags$style(".butt2{background-color:#FFAD00} .butt2{color: #FFFFFF;}")),
+                div(style = "display:inline-block; width:30#; text-align: center;",
+                    downloadButton("download_data1", label = "Download csv", class = "butt2")),
+                em("This is filtered data")
               ),
               
-              column(width = 9,
+              column(width = 10,
                 fluidRow(
                   box(
                     title = "Scatter Plot",
@@ -125,7 +132,7 @@ ui <- dashboardPage(
                     collapsible = TRUE,
                     solidHeader = TRUE,
                     
-                    plotOutput("plot1")
+                    plotlyOutput("plot1")
                     ),
                   
                   box(
@@ -134,7 +141,7 @@ ui <- dashboardPage(
                     collapsible = TRUE,
                     solidHeader = TRUE,
                     
-                    plotOutput("plot2")
+                    plotlyOutput("plot2")
                     )
                   )
                 )
