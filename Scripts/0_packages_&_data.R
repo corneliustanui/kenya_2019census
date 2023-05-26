@@ -18,6 +18,7 @@ library(gmodels)
 library(magrittr)
 library(rsconnect)
 library(packrat)
+library(renv)
 
 # load data
 
@@ -52,7 +53,20 @@ pp_age_sex_county_long <-
                       values_to = "Population") %>% 
   
   # convert pop to log scale
-  dplyr::mutate(Population = round(log(Population), 1)) %>% 
+  dplyr::mutate(Population_raw = Population,
+                Population = round(log(Population), 1)) %>% 
   
   # keep only valid pop values
-  dplyr::filter(!is.na(Population))
+  dplyr::filter(!is.na(Population)) %>% 
+  as.data.frame()
+
+
+
+
+
+
+
+
+
+
+

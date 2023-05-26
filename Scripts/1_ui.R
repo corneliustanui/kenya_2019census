@@ -19,37 +19,25 @@ ui <- dashboardPage(
                tabName = "home",
                icon = icon("home")),
       
-      menuItem("Demographics", startExpanded = FALSE, icon = icon("people-roof"),
-               menuSubItem("Sub info 1", tabName = "info1"),
-               menuSubItem("Sub info 2", tabName = "info2")
+      menuItem("Dashboard", startExpanded = FALSE, icon = icon("dashboard"),
+               menuSubItem("Demographics", tabName = "info1", icon = icon("people-roof")),
+               menuSubItem("Healthcare", tabName = "info2", icon = icon("heart-pulse")),
+               menuSubItem("Education", tabName = "info3", icon = icon("school")),
+               menuSubItem("Water", tabName = "info4", icon = icon("faucet-drip")),
+               menuSubItem("Electricity", tabName = "info5", icon = icon("plug-circle-bolt"))
       ),
       
-      menuItem("Healthcare", startExpanded = FALSE, icon = icon("heart-pulse"),
-                 menuSubItem("Sub info 3", tabName = "info3"),
-                 menuSubItem("Sub info 4", tabName = "info4")
-                 
-      ),
-      
-      menuItem("Education", startExpanded = FALSE, icon = icon("school"),
-               menuSubItem("Sub info 5", tabName = "info5"),
-               menuSubItem("Sub info 6", tabName = "info6")
-      ),
-      
-      menuItem("Water", startExpanded = FALSE, icon = icon("faucet-drip"),
-             menuSubItem("Sub info 7", tabName = "info7"),
-             menuSubItem("Sub info 8", tabName = "info8")
-             
-      ),
-      
-      menuItem("Electricity", startExpanded = FALSE, icon = icon("plug-circle-bolt"),
-               menuSubItem("Sub info 9", tabName = "info9"),
-               menuSubItem("Sub info 10", tabName = "info10")
-               
+      menuItem("About", 
+               tabName = "info6",
+               icon = icon("circle-info")
       )
     )
   ),
   
   dashboardBody(
+    
+    # customize size of infoBoxes
+    tags$head(tags$style(HTML('.info-box {min-height: 45px;} .info-box-icon {height: 45px; line-height: 45px;} .info-box-content {padding-top: 0px; padding-bottom: 0px;}'))),
     tabItems(
       tabItem("home", 
               HTML("<p>This secondary data from Kenya Household and Population Census <a href='https://www.knbs.or.ke/'>(KPHC)</a>of 2019, 
@@ -83,7 +71,12 @@ ui <- dashboardPage(
       
       tabItem("info1",
               
-              column(width = 2,
+              # output values for infoBoxes
+              valueBoxOutput("male", width = 4),
+              valueBoxOutput("female", width = 4),
+              valueBoxOutput("total", width = 4),
+              
+              column(width = 3,
                 box(
                   width = NULL,
                   title = "Filters",
@@ -95,7 +88,16 @@ ui <- dashboardPage(
                     inputId = "county",
                     label = "Select county",
                     choices = unique(pp_age_sex_county_long$County),
-                    selected = unique(pp_age_sex_county_long$County),
+                    selected = unique(pp_age_sex_county_long$County)[1],
+                    multiple = FALSE,
+                    selectize = FALSE
+                  ),
+                  
+                  shiny::selectInput(
+                    inputId = "sub_county",
+                    label = "Select Sub-county",
+                    choices = NULL,
+                    selected = NULL,
                     multiple = FALSE,
                     selectize = FALSE
                   ),
@@ -121,10 +123,11 @@ ui <- dashboardPage(
                 tags$head(tags$style(".butt2{background-color:#FFAD00} .butt2{color: #FFFFFF;}")),
                 div(style = "display:inline-block; width:30#; text-align: center;",
                     downloadButton("download_data1", label = "Download csv", class = "butt2")),
+                br(),
                 em("This is filtered data")
               ),
               
-              column(width = 10,
+              column(width = 9,
                 fluidRow(
                   box(
                     title = "Scatter Plot",
@@ -147,23 +150,15 @@ ui <- dashboardPage(
                 )
               ),
               
-      tabItem("info2", "Sub info 2"),
+      tabItem("info2", "Healthcare"),
       
-      tabItem("info3", "Sub info 3"),
+      tabItem("info3", "Education"),
       
-      tabItem("info4", "Sub info 4"),
+      tabItem("info4", "Water"),
       
-      tabItem("info5", "Sub info 5"),
+      tabItem("info5", "Electricity"),
       
-      tabItem("info6", "Sub info 6"),
-      
-      tabItem("info7", "Sub info 7"),
-      
-      tabItem("info8", "Sub info 8"),
-      
-      tabItem("info9", "Sub info 9"),
-      
-      tabItem("info10", "Sub info 10")
+      tabItem("info6", "About")
     )
   )
 )

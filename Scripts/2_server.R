@@ -20,11 +20,6 @@ server <-
           filter = "top",
           rownames = FALSE,
           selection = "single"
-          # extensions = "Buttons",
-          # options = list(
-          #   dom = 'Bfrtip',
-          #   buttons = c('copy', 'csv', 'pdf')
-          #   )
           )
       }
     )
@@ -53,30 +48,79 @@ server <-
         }
       )
     
-    # data for download
+    # sub-county filter
+    observeEvent(pp_age_sex_county_react(), {
+      choices <- unique(pp_age_sex_county_react()$SubCounty)
+      freezeReactiveValue(input, "sub_county")
+      updateSelectInput(inputId = "sub_county", choices = choices) 
+    })
+    
+    pp_age_sex_sub_county_react <- reactive({
+      req(input$sub_county)
+      pp_age_sex_county_react() %>% 
+        dplyr::filter(SubCounty %in% input$sub_county)
+    })
+    
+    
+    # value boxes
+    output$male <- shinydashboard::renderValueBox({ 
+      shinydashboard::infoBox(value = sum(pp_age_sex_sub_county_react()[pp_age_sex_sub_county_react()$Gender == "Male", ]$Population_raw), 
+                              title = "Male population",
+                              icon = icon("mars", class = "fa-2xs"),
+                              color = "teal",
+                              fill = TRUE)
+      
+    })
+    
+    output$female <- shinydashboard::renderValueBox({ 
+      shinydashboard::infoBox(value = sum(pp_age_sex_sub_county_react()[pp_age_sex_sub_county_react()$Gender == "Female", ]$Population_raw), 
+                              title = "Female population",
+                              icon = icon("venus", class = "fa-2xs"),
+                              color = "purple",
+                              fill = TRUE)
+      
+    })
+    
+    output$total <- shinydashboard::renderValueBox({ 
+      shinydashboard::infoBox(value = sum(pp_age_sex_sub_county_react()$Population_raw), 
+                              title = "Total population",
+                              icon = icon("mars-and-venus", class = "fa-2xs"),
+                              color = "olive",
+                              fill = TRUE)
+      
+    })
+    
+    
+    # prepare data for download
+    
+    pp_age_sex_sub_county_raw <- reactive({
+      pp_age_sex_sub_county_react() %>% 
+      dplyr::select(-Population) %>% 
+      dplyr::rename("Population" = Population_raw)
+    })
+    
     output$download_data1 <- downloadHandler(
       filename = function() {
         paste("Filtered_Data_", Sys.Date(), ".csv", sep="")
       },
+      
       content = function(file) {
-        write.csv(pp_age_sex_county_react(), file, row.names = FALSE)
+        write.csv(pp_age_sex_sub_county_raw(), file, row.names = FALSE)
       }
     )
     
-    
     # plot 1
     output$plot1 <- renderPlotly({ 
-      plot1 <- pp_age_sex_county_react() %>% 
-        slice_sample(n = 5000, replace = TRUE) %>% 
+      plot1 <- pp_age_sex_sub_county_react() %>% 
+        #slice_sample(n = 5000, replace = TRUE) %>% 
         dplyr::mutate(text = paste("\nCounty: ", County,
                                    "\nSub-county: ", SubCounty)) %>% 
         ggplot(aes(x = Age, 
                    y = Population,
-                   color = SubCounty,
+                   color = Gender,
                    text = text)) +
         geom_point(position = "jitter") +
         geom_smooth(method = "loess") +
-        facet_wrap(~ Gender)+
         labs(x = "Age",
              y = "Log(Population)",
              title = "Population by Age and Sex",
@@ -92,15 +136,14 @@ server <-
     #plot 2
     # density plot data (population  by age and sex)
     output$plot2 <- renderPlotly({
-      plot2 <- pp_age_sex_county_react() %>% 
-        slice_sample(n = 5000, replace = TRUE) %>% 
+      plot2 <- pp_age_sex_sub_county_react() %>% 
+        #slice_sample(n = 5000, replace = TRUE) %>% 
         dplyr::mutate(text = paste("\nCounty: ", County,
                                    "\nSub-county: ", SubCounty)) %>% 
         ggplot(aes(x = Population,
-                   fill = SubCounty,
+                   fill = Gender,
                    text = text)) +
         geom_density(alpha = 0.4, na.rm = TRUE) +
-        facet_wrap(~ Gender)+
         labs(x = "Log(Population)",
              y = "Density",
              title = "Population by Age and Sex",
