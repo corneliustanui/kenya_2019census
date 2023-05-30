@@ -158,7 +158,17 @@ ui <- dashboardPage(
       
       tabItem("info5", "Electricity"),
       
-      tabItem("info6", "About")
+      tabItem("info6", 
+              
+              p("This app was programmed by", a("Cornelius Tanui", href = 'https://github.com/corneliustanui'),
+                "a seasoned data scientist. Contact him on", a("LinkedIn", href = 'https://www.linkedin.com/in/cornelius-tanui-527979b9/'),  
+                "or via", strong(em("kiplimocornelius@gmail.com.")))
+              
+              # HTML("<p> This app was programmed by <a href = 'https://github.com/corneliustanui'> Cornelius Tanui, </a> 
+              #      a seasoned data scientist. Contact him on <a href = 'https://www.linkedin.com/in/cornelius-tanui-527979b9/'> LinkedIn </a> 
+              #      or via em(kiplimocornelius@gmail.com).
+              #      </p>")
+              )
     )
   )
 )
