@@ -38,7 +38,7 @@ vignettes/*.pdf
 # R Environment Variables
 .Renviron
 
-README.htlm
+*.htlm
 
 Data/
 Images/logo.jpg
