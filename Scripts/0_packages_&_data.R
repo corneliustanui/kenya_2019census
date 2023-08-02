@@ -1,7 +1,12 @@
+# Author: Cornelius Tanui
+# Purpose: Interactive App to Visualize KPHC2019 Data
+# Date Created: 2019
+# Date Updated: Version Controlled  on GitHub
+# File Name: 0_packages_&_data.R
+# File Purpose: Functional file to load packages and data.
 
 # clear environment
 rm(list = ls(all.names = TRUE))
-
 
 # load packages
 library(rKenyaCensus)
@@ -38,11 +43,8 @@ wite_data <- function(ds_name, ...){
   )
 }
 
-
-
 V1_T2.1 <- get_data(ds_name = V1_T2.1)
 wite_data(ds_name = V1_T2.1)
-
 
 for (i in seq_along(rKenyaCensus_datasets$Item)) {
   
@@ -61,7 +63,6 @@ str_glue("rKenyaCensus::{my_species}")
 # catalogue data
 DataCatalogue <- readRDS("Data/DataCatalogue.RDS")%>% 
   as.data.frame()
-
 
 # V3_T2.3 table
 V3_T2.3 <- readRDS("Data/V3_T2.3.RDS")

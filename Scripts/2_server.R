@@ -1,14 +1,11 @@
-#
-# This is the server logic of a Shiny web application. You can run the
-# application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-
+# Author: Cornelius Tanui
+# Purpose: Interactive App to Visualize KPHC2019 Data
+# Date Created: 2019
+# Date Updated: Version Controlled  on GitHub
+# File Name: 2_server.R
+# File Purpose: Functional file to design UI.
 
 # define server
-
 server <-
   function(input, output, session){
     
