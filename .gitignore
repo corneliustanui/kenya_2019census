@@ -39,7 +39,7 @@ vignettes/*.pdf
 .Renviron
 
 Data/
-Images/
+Images/logo.jpg
 .Rprofile
 kenya_2019census.Rproj
 renv/
