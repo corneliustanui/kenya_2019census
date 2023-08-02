@@ -38,6 +38,8 @@ vignettes/*.pdf
 # R Environment Variables
 .Renviron
 
+README.htlm
+
 Data/
 Images/logo.jpg
 .Rprofile
