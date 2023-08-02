@@ -4,7 +4,7 @@ rm(list = ls(all.names = TRUE))
 
 
 # load packages
-
+library(rKenyaCensus)
 library(tidyverse)
 library(shiny)
 library(shinydashboard)
@@ -21,6 +21,42 @@ library(packrat)
 library(renv)
 
 # load data
+rKenyaCensus_datasets <- 
+  data(package = "rKenyaCensus")[["results"]] %>% 
+  as.data.frame() %>% 
+  dplyr::select(Item, Title)
+
+get_data <- function(ds_name, ...){
+  require(rKenyaCensus)
+  ds <- ds_name %>% as.data.frame()
+  return(ds)
+}
+
+wite_data <- function(ds_name, ...){
+  saveRDS(object = ds_name, 
+          file = paste0("Data/", ds_name, ".RDS")
+  )
+}
+
+
+
+V1_T2.1 <- get_data(ds_name = V1_T2.1)
+wite_data(ds_name = V1_T2.1)
+
+
+for (i in seq_along(rKenyaCensus_datasets$Item)) {
+  
+  rKenyaCensus_datasets$Item[i] <- get_data(ds_name = rKenyaCensus_datasets$Item[i])
+  
+  
+  saveRDS(object = str_glue(rKenyaCensus_datasets$Item[i]), 
+          file = paste0("Data/", rKenyaCensus_datasets$Item[i], ".RDS")
+  )
+}
+
+my_species <- "V1_T2.1"
+
+str_glue("rKenyaCensus::{my_species}")
 
 # catalogue data
 DataCatalogue <- readRDS("Data/DataCatalogue.RDS")%>% 

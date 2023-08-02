@@ -37,3 +37,11 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+Data/
+Images/
+.Rprofile
+kenya_2019census.Rproj
+renv/
+renv.lock
+rsconnect/
