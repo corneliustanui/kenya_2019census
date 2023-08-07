@@ -168,7 +168,14 @@ ui <- dashboardPage(
               #      or via em(kiplimocornelius@gmail.com).
               #      </p>")
               )
-    )
+    ),
+    
+    # add footer
+    tags$style(type = 'text/css', "footer{position: absolute; bottom:0.5%; right: 1%; padding:5px;}"),
+    
+    HTML('<footer>
+            <a id = "copyright"> © 2023 by Cornelius Tanui </a>
+          </footer>')
   )
 )
       

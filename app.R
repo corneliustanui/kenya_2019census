@@ -13,6 +13,5 @@ source("./Scripts/2_server.R")
 # build app
 shinyApp(ui = ui, server = server)
 
-# TODO: Add copyright at as a footer on each page
 # TODO: Add a population pyramid chart
 # TODO: Add a demographics map and color by median age
