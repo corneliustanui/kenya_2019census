@@ -9,6 +9,8 @@
 rm(list = ls(all.names = TRUE))
 
 # load packages
+# devtools::install_github("Shelmith-Kariuki/rKenyaCensus")
+
 library(rKenyaCensus)
 library(tidyverse)
 library(shiny)
@@ -24,48 +26,53 @@ library(magrittr)
 library(rsconnect)
 library(packrat)
 library(renv)
+library(sp)
+library(sf)
 
-# load data
+# list of available data
 rKenyaCensus_datasets <- 
   data(package = "rKenyaCensus")[["results"]] %>% 
   as.data.frame() %>% 
   dplyr::select(Item, Title)
 
-get_data <- function(ds_name, ...){
+# read data from package, and write to folder
+read_write_data <- function(ds_name, ...){
+  
+  # read data from package
   require(rKenyaCensus)
   ds <- ds_name %>% as.data.frame()
+
+  # write data to folder
+  ds_name_original <- deparse(substitute(ds_name))
+  
+  write_rds(x = ds_name,
+            file = paste0("Data/", ds_name_original, ".rds")
+  )
+  
   return(ds)
 }
 
-wite_data <- function(ds_name, ...){
-  saveRDS(object = ds_name, 
-          file = paste0("Data/", ds_name, ".RDS")
-  )
-}
-
-V1_T2.1 <- get_data(ds_name = V1_T2.1)
-wite_data(ds_name = V1_T2.1)
-
-for (i in seq_along(rKenyaCensus_datasets$Item)) {
-  
-  rKenyaCensus_datasets$Item[i] <- get_data(ds_name = rKenyaCensus_datasets$Item[i])
-  
-  
-  saveRDS(object = str_glue(rKenyaCensus_datasets$Item[i]), 
-          file = paste0("Data/", rKenyaCensus_datasets$Item[i], ".RDS")
-  )
-}
-
-my_species <- "V1_T2.1"
-
+my_species <- "V1_T2.2"
 str_glue("rKenyaCensus::{my_species}")
 
-# catalogue data
-DataCatalogue <- readRDS("Data/DataCatalogue.RDS")%>% 
-  as.data.frame()
+# Data Cleaning
+# County GPS centroids 
+CountyGPS <- read_write_data(ds_name = CountyGPS)
+
+# Catalogue
+DataCatalogue <- read_write_data(ds_name = DataCatalogue)
+
+# Shapefiles of Kenya County boundaries
+KenyaCounties_SHP <- read_write_data(ds_name = KenyaCounties_SHP)
+
+# Census Indicators at a Glance
+V1_T2.1 <- read_write_data(ds_name = V1_T2.1)
+
+# Distribution of Population by Sex and County
+V1_T2.2 <- read_write_data(ds_name = V1_T2.2)
 
 # V3_T2.3 table
-V3_T2.3 <- readRDS("Data/V3_T2.3.RDS")
+V3_T2.3 <- read_write_data(ds_name = V3_T2.3)
 
 # Remove unnecessary records 
 pp_age_sex_county <- V3_T2.3 %>% 
