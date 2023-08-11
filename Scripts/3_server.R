@@ -2,7 +2,7 @@
 # Purpose: Interactive App to Visualize KPHC2019 Data
 # Date Created: 2019
 # Date Updated: Version Controlled  on GitHub
-# File Name: 2_server.R
+# File Name: 3_server.R
 # File Purpose: Functional file to design UI.
 
 # define server
@@ -31,7 +31,6 @@ server <-
       }
     )
     
-    
     # reactive data
     pp_age_sex_county_react <- 
       reactive(
@@ -57,7 +56,6 @@ server <-
       pp_age_sex_county_react() %>% 
         dplyr::filter(SubCounty %in% input$sub_county)
     })
-    
     
     # value boxes
     output$male <- shinydashboard::renderValueBox({ 
@@ -87,9 +85,7 @@ server <-
       
     })
     
-    
     # prepare data for download
-    
     pp_age_sex_sub_county_raw <- reactive({
       pp_age_sex_sub_county_react() %>% 
       dplyr::select(-Population) %>% 
@@ -111,7 +107,10 @@ server <-
       plot1 <- pp_age_sex_sub_county_react() %>% 
         #slice_sample(n = 5000, replace = TRUE) %>% 
         dplyr::mutate(text = paste("\nCounty: ", County,
-                                   "\nSub-county: ", SubCounty)) %>% 
+                                   "\nSub-county: ", SubCounty,
+                                   "\nGender: ", Gender,
+                                   "\nPopulation: ", Population_raw,
+                                   "\nAge: ", Age)) %>% 
         ggplot(aes(x = Age, 
                    y = Population,
                    color = Gender,
@@ -127,7 +126,8 @@ server <-
               panel.grid.minor = element_blank(), 
               panel.background = element_blank(),
               axis.line = element_line(colour = "black"))
-      plot1
+      
+      ggplotly(plot1, tooltip = "text")
     })
     
     #plot 2
@@ -136,7 +136,10 @@ server <-
       plot2 <- pp_age_sex_sub_county_react() %>% 
         #slice_sample(n = 5000, replace = TRUE) %>% 
         dplyr::mutate(text = paste("\nCounty: ", County,
-                                   "\nSub-county: ", SubCounty)) %>% 
+                                   "\nSub-county: ", SubCounty,
+                                   "\nGender: ", Gender,
+                                   "\nPopulation: ", Population_raw,
+                                   "\nAge: ", Age)) %>% 
         ggplot(aes(x = Population,
                    fill = Gender,
                    text = text)) +
@@ -151,7 +154,45 @@ server <-
               panel.background = element_blank(),
               axis.line = element_line(colour = "black"))
       
-      plot2
+      ggplotly(plot2, tooltip = "text")
     })
+    
+    #plot 3
+    # pyramid data (population  by age and sex)
+    output$plot3 <- renderPlotly({
+      plot3 <- pp_age_sex_sub_county_react() %>% 
+        mutate(Population_raw = ifelse(Gender == "Male", Population_raw*(-1), Population_raw*1),
+               text = paste("\nCounty: ", County,
+                            "\nSub-county: ", SubCounty,
+                            "\nGender: ", Gender,
+                            "\nPopulation: ", Population_raw,
+                            "\nAge: ", Age))%>%
+        ggplot(aes(x = Age, 
+                   y = Population_raw, 
+                   fill = Gender, 
+                   text = text)) +
+        geom_bar(stat = "identity") +
+        coord_flip()+
+        scale_y_continuous(labels = abs, 
+                           limits = max(pp_age_sex_sub_county_react()$Population_raw) * c(-1,1),
+                           breaks = seq(from = - max(pp_age_sex_sub_county_react()$Population_raw), 
+                                        to = max(pp_age_sex_sub_county_react()$Population_raw), 
+                                        by = 5000)) + 
+        labs(title = "Population by Age and Sex", 
+             x = "Age",
+             y = "Population",
+             caption = "Source: KHPC2019") +
+        theme(panel.border = element_blank(),
+              panel.grid.major = element_blank(),
+              panel.grid.minor = element_blank(), 
+              panel.background = element_blank(),
+              axis.line = element_line(colour = "black"))
+      
+      ggplotly(plot3, tooltip = "text")
+    })
+    
+    #plot 4
+    # map
+    output$plot4 <- plot(KenyaCounties_SHP)
     
   }

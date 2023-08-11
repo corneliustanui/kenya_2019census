@@ -2,7 +2,7 @@
 # Purpose: Interactive App to Visualize KPHC2019 Data
 # Date Created: 2019
 # Date Updated: Version Controlled  on GitHub
-# File Name: 1_ui.R
+# File Name: 2_ui.R
 # File Purpose: Functional file to design UI.
 
 # define server
@@ -68,7 +68,7 @@ ui <- dashboardPage(
               )
               ),
       
-      tabItem("info1",
+      tabItem("info1", 
               
               # output values for infoBoxes
               valueBoxOutput("male", width = 4),
@@ -117,13 +117,15 @@ ui <- dashboardPage(
                     choices = unique(pp_age_sex_county_long$Gender), 
                     selected = unique(pp_age_sex_county_long$Gender), 
                     inline = FALSE
-                  )
-                ),
-                tags$head(tags$style(".butt2{background-color:#FFAD00} .butt2{color: #FFFFFF;}")),
-                div(style = "display:inline-block; width:30#; text-align: center;",
-                    downloadButton("download_data1", label = "Download csv", class = "butt2")),
-                br(),
-                em("This is filtered data")
+                  ),
+                  
+                  tags$head(tags$style(".butt2{background-color:#FFAD00} .butt2{color: #FFFFFF;}")),
+                  div(style = "display:inline-block; width:30#; text-align: center;",
+                      downloadButton("download_data1", label = "Download csv", class = "butt2")),
+                  br(),
+                  em("This is filtered data")
+                )
+                
               ),
               
               column(width = 9,
@@ -146,7 +148,29 @@ ui <- dashboardPage(
                     plotlyOutput("plot2")
                     )
                   )
-                )
+                ),
+              
+              column(width = 12,
+                     fluidRow(
+                       box(
+                         title = "Population Pyramid",
+                         status = "warning",
+                         collapsible = TRUE,
+                         solidHeader = TRUE,
+                         
+                         plotlyOutput("plot3")
+                       ),
+                       
+                       box(
+                         title = "Map",
+                         status = "warning",
+                         collapsible = TRUE,
+                         solidHeader = TRUE,
+                         
+                         renderPlot("plot4")
+                       )
+                    )
+                 )
               ),
               
       tabItem("info2", "Healthcare"),

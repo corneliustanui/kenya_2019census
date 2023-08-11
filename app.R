@@ -6,12 +6,13 @@
 # File Purpose: Combine functional files for the app.
 
 # source app files
-source("./Scripts/0_packages_&_data.R")
-source("./Scripts/1_ui.R")
-source("./Scripts/2_server.R")
+# source("./Scripts/0_packages.R")
+# source("./Scripts/1.1_write_data.R")
+source("./Scripts/1.2_read_data.R")
+source("./Scripts/2_ui.R")
+source("./Scripts/3_server.R")
 
 # build app
 shinyApp(ui = ui, server = server)
 
-# TODO: Add a population pyramid chart
 # TODO: Add a demographics map and color by median age
