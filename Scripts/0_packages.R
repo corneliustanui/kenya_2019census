@@ -26,6 +26,11 @@ library(magrittr)
 library(rsconnect)
 library(packrat)
 library(renv)
+
+# mapping libs
 library(sp)
 library(sf)
+library(leaflet)
+library(lwgeom)
+library(tmap)
 

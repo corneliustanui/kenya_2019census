@@ -167,7 +167,7 @@ ui <- dashboardPage(
                          collapsible = TRUE,
                          solidHeader = TRUE,
                          
-                         renderPlot("plot4")
+                         leafletOutput("plot4")
                        )
                     )
                  )

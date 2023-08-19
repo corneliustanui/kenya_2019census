@@ -116,7 +116,8 @@ server <-
                    color = Gender,
                    text = text)) +
         geom_point(position = "jitter") +
-        geom_smooth(method = "loess") +
+        geom_smooth(method = "loess",
+                    formula = 'y ~ x') +
         labs(x = "Age",
              y = "Log(Population)",
              title = "Population by Age and Sex",
@@ -142,7 +143,8 @@ server <-
                                    "\nAge: ", Age)) %>% 
         ggplot(aes(x = Population,
                    fill = Gender,
-                   text = text)) +
+                   # text = text
+                   )) +
         geom_density(alpha = 0.4, na.rm = TRUE) +
         labs(x = "Log(Population)",
              y = "Density",
@@ -154,7 +156,7 @@ server <-
               panel.background = element_blank(),
               axis.line = element_line(colour = "black"))
       
-      ggplotly(plot2, tooltip = "text")
+      ggplotly(plot2)
     })
     
     #plot 3
@@ -193,6 +195,53 @@ server <-
     
     #plot 4
     # map
-    output$plot4 <- plot(KenyaCounties_SHP)
+    output$plot4 <- renderLeaflet({
+      
+      KenyaCounties_SHP_1 <- spTransform(KenyaCounties_SHP, CRS("+init=epsg:4326"))
+      
+      bins <- c(0, 10, 20, 50, 100, 200, 500, 1000, Inf)
+      
+      pal <- colorBin("YlOrRd", domain = KenyaCounties_SHP_1@data$PD, bins = bins)
+      
+      labels <- sprintf(
+        "<strong>%s</strong><br/>%g people / m<sup>2</sup>",
+        KenyaCounties_SHP_1$County, KenyaCounties_SHP_1$PD
+      ) %>% lapply(htmltools::HTML)
+      
+      plot4 <- 
+        leaflet(KenyaCounties_SHP_1) %>% 
+        setView(lng = 37.9062,
+                lat = 0.0236, 
+                zoom = 6) %>% 
+        addProviderTiles("CartoDB.Positron", 
+                         options = providerTileOptions(opacity = 0.99)) %>%
+        addPolygons(
+          fillColor = ~pal(PD),
+          weight = 2,
+          opacity = 1,
+          color = "white",
+          dashArray = "3",
+          fillOpacity = 0.7,
+          highlightOptions = highlightOptions(
+            weight = 5,
+            color = "#666",
+            dashArray = "",
+            fillOpacity = 0.7,
+            bringToFront = TRUE),
+          label = labels,
+          labelOptions = labelOptions(
+            style = list("font-weight" = "normal", padding = "3px 8px"),
+            textsize = "15px",
+            direction = "auto")) %>%
+        addLegend(pal = pal, 
+                  values = ~PD, 
+                  opacity = 0.7, 
+                  title = "Population Density",
+                  position = "bottomright")
+      
+      plot4
+      
+    })
+    
     
   }
