@@ -11,7 +11,7 @@ rm(list = ls(all.names = TRUE))
 # load packages
 # devtools::install_github("Shelmith-Kariuki/rKenyaCensus")
 
-library(rKenyaCensus)
+# library(rKenyaCensus)
 library(tidyverse)
 library(shiny)
 library(shinydashboard)
