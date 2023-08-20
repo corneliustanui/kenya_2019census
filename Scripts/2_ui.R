@@ -35,6 +35,9 @@ ui <- dashboardPage(
   
   dashboardBody(
     
+    # reduce space between boxes
+    tags$head(tags$style(HTML("div.col-sm-6 {padding:2px}"))),
+
     # customize size of infoBoxes
     tags$head(tags$style(HTML('.info-box {min-height: 45px;} .info-box-icon {height: 45px; line-height: 45px;} .info-box-content {padding-top: 0px; padding-bottom: 0px;}'))),
     tabItems(
@@ -63,115 +66,137 @@ ui <- dashboardPage(
                   div(style = "display:inline-block; width:30#; text-align: center;",
                       downloadButton("download_data_cat", label = "Download csv", class = "butt1")),
 
-                  DTOutput("data_description")
+                  DTOutput("data_description") %>% 
+                    withSpinner(type = 6, 
+                                size = 0.5,
+                                color = "#FFAD00")
                 )
-              )
+               )
               ),
       
       tabItem("info1", 
               
-              # output values for infoBoxes
-              valueBoxOutput("male", width = 4),
-              valueBoxOutput("female", width = 4),
-              valueBoxOutput("total", width = 4),
-              
-              column(width = 3,
-                box(
-                  width = NULL,
-                  title = "Filters",
-                  status = "warning",
-                  collapsible = TRUE,
-                  solidHeader = TRUE,
-                  
-                  shiny::selectInput(
-                    inputId = "county",
-                    label = "Select county",
-                    choices = unique(pp_age_sex_county_long$County),
-                    selected = unique(pp_age_sex_county_long$County)[1],
-                    multiple = FALSE,
-                    selectize = FALSE
-                  ),
-                  
-                  shiny::selectInput(
-                    inputId = "sub_county",
-                    label = "Select Sub-county",
-                    choices = NULL,
-                    selected = NULL,
-                    multiple = FALSE,
-                    selectize = FALSE
-                  ),
-                  
-                  shiny::sliderInput(
-                    inputId = "age",
-                    label = "Age", 
-                    min = min(pp_age_sex_county_long$Age, na.rm = T),
-                    max = max(pp_age_sex_county_long$Age, na.rm = T), 
-                    value = c(min(pp_age_sex_county_long$Age, na.rm = T), 
-                              max(pp_age_sex_county_long$Age, na.rm = T)),
-                    step = 5
-                  ),
-                  
-                  shiny::checkboxGroupInput(
-                    inputId = "gender",
-                    label = "Select gender",
-                    choices = unique(pp_age_sex_county_long$Gender), 
-                    selected = unique(pp_age_sex_county_long$Gender), 
-                    inline = FALSE
-                  ),
-                  
-                  tags$head(tags$style(".butt2{background-color:#FFAD00} .butt2{color: #FFFFFF;}")),
-                  div(style = "display:inline-block; width:30#; text-align: center;",
-                      downloadButton("download_data1", label = "Download csv", class = "butt2")),
-                  br(),
-                  em("This is filtered data")
-                )
+              fluidRow(
+                width = 12,
                 
+                # output values for infoBoxes
+                valueBoxOutput("male", width = 4),
+                valueBoxOutput("female", width = 4),
+                valueBoxOutput("total", width = 4) 
               ),
               
-              column(width = 9,
-                fluidRow(
+              fluidRow(
+                width = 12,
+                
+                column(
+                  width = 3,
                   box(
-                    title = "Scatter Plot",
+                    width = NULL,
+                    title = "Filters",
                     status = "warning",
                     collapsible = TRUE,
                     solidHeader = TRUE,
-                    
-                    plotlyOutput("plot1")
+
+                    shiny::selectInput(
+                      inputId = "county",
+                      label = "Select county",
+                      choices = unique(pp_age_sex_county_long$County),
+                      selected = unique(pp_age_sex_county_long$County)[1],
+                      multiple = FALSE,
+                      selectize = FALSE
                     ),
-                  
-                  box(
-                    title = "Density Plot",
-                    status = "warning",
-                    collapsible = TRUE,
-                    solidHeader = TRUE,
                     
-                    plotlyOutput("plot2")
-                    )
+                    shiny::selectInput(
+                      inputId = "sub_county",
+                      label = "Select Sub-county",
+                      choices = NULL,
+                      selected = NULL,
+                      multiple = FALSE,
+                      selectize = FALSE
+                    ),
+                    
+                    shiny::sliderInput(
+                      inputId = "age",
+                      label = "Age", 
+                      min = min(pp_age_sex_county_long$Age, na.rm = T),
+                      max = max(pp_age_sex_county_long$Age, na.rm = T), 
+                      value = c(min(pp_age_sex_county_long$Age, na.rm = T), 
+                                max(pp_age_sex_county_long$Age, na.rm = T)),
+                      step = 5
+                    ),
+                    
+                    shiny::checkboxGroupInput(
+                      inputId = "gender",
+                      label = "Select gender",
+                      choices = unique(pp_age_sex_county_long$Gender), 
+                      selected = unique(pp_age_sex_county_long$Gender), 
+                      inline = FALSE
+                    ),
+                    
+                    tags$head(tags$style(".butt2{background-color:#FFAD00} .butt2{color: #FFFFFF;}")),
+                    div(style = "display:inline-block; width:30#; text-align: center;",
+                        downloadButton("download_data1", label = "Download csv", class = "butt2")),
+                    br(),
+                    em("This is filtered data")
                   )
                 ),
-              
-              column(width = 12,
-                     fluidRow(
-                       box(
-                         title = "Population Pyramid",
-                         status = "warning",
-                         collapsible = TRUE,
-                         solidHeader = TRUE,
-                         
-                         plotlyOutput("plot3")
-                       ),
-                       
-                       box(
-                         title = "Map",
-                         status = "warning",
-                         collapsible = TRUE,
-                         solidHeader = TRUE,
-                         
-                         leafletOutput("plot4")
-                       )
+                
+                column(
+                  width = 9,
+                  fluidRow(
+                    box(
+                      title = "Scatter Plot",
+                      status = "warning",
+                      collapsible = TRUE,
+                      solidHeader = TRUE,
+                      
+                      plotlyOutput("plot1") %>% 
+                        withSpinner(type = 6, 
+                                    size = 0.5,
+                                    color = "#FFAD00")
+                    ),
+                    
+                    box(
+                      title = "Density Plot",
+                      status = "warning",
+                      collapsible = TRUE,
+                      solidHeader = TRUE,
+                      
+                      plotlyOutput("plot2") %>% 
+                        withSpinner(type = 6, 
+                                    size = 0.5,
+                                    color = "#FFAD00")
                     )
-                 )
-              ),
+                  ), 
+                  
+                  fluidRow(
+                    box(
+                      title = "Population Pyramid",
+                      status = "warning",
+                      collapsible = TRUE,
+                      solidHeader = TRUE,
+                      
+                      plotlyOutput("plot3") %>% 
+                        withSpinner(type = 6, 
+                                    size = 0.5,
+                                    color = "#FFAD00")
+                    ),
+                    
+                    box(
+                      title = "Map",
+                      status = "warning",
+                      collapsible = TRUE,
+                      solidHeader = TRUE,
+                      
+                      leafletOutput("plot4") %>% 
+                        withSpinner(type = 6, 
+                                    size = 0.5,
+                                    color = "#FFAD00")
+                    )
+                  )
+                )
+              )
+            ),
               
       tabItem("info2", "Healthcare"),
       

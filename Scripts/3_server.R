@@ -71,7 +71,7 @@ server <-
       shinydashboard::infoBox(value = sum(pp_age_sex_sub_county_react()[pp_age_sex_sub_county_react()$Gender == "Female", ]$Population_raw), 
                               title = "Female population",
                               icon = icon("venus", class = "fa-2xs"),
-                              color = "purple",
+                              color = "teal",
                               fill = TRUE)
       
     })
@@ -80,7 +80,7 @@ server <-
       shinydashboard::infoBox(value = sum(pp_age_sex_sub_county_react()$Population_raw), 
                               title = "Total population",
                               icon = icon("mars-and-venus", class = "fa-2xs"),
-                              color = "olive",
+                              color = "teal",
                               fill = TRUE)
       
     })
@@ -205,7 +205,8 @@ server <-
       
       labels <- sprintf(
         "<strong>%s</strong><br/>%g people / m<sup>2</sup>",
-        KenyaCounties_SHP_1$County, KenyaCounties_SHP_1$PD
+        KenyaCounties_SHP_1$County, 
+        KenyaCounties_SHP_1$PD
       ) %>% lapply(htmltools::HTML)
       
       plot4 <- 
