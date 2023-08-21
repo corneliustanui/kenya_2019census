@@ -16,5 +16,18 @@ setAccountInfo(name = error_on_missing_name("SHINY_ACC_NAME"),
                secret = error_on_missing_name("SECRET"))
 
 # Deploy the application.
-deployApp(appName = error_on_missing_name("MASTERNAME"),
+deployApp(appFiles = c('Scripts/0_packages.R', 
+                       'Scripts/1.2_read_data.R', 
+                       'Scripts/2_ui.R', 
+                       'Scripts/3_server.R',
+                       
+                       'app.R', 
+                       
+                       'Data/CountyGPS.rds', 
+                       'Data/DataCatalogue.rds', 
+                       'Data/KenyaCounties_SHP.rds', 
+                       'Data/V1_T2.1.rds', 
+                       'Data/V1_T2.2.rds', 
+                       'Data/V3_T2.3.rds'),
+          appName = error_on_missing_name("MASTERNAME"),
           forceUpdate = TRUE)
