@@ -7,7 +7,7 @@ COPY Scripts/1.2_read_data.R Scripts/1.2_read_data.R
 COPY Scripts/2_ui.R Scripts/2_ui.R
 COPY Scripts/3_server.R Scripts/3_server.R
 RUN mkdir -p /APPDIR/Data/
-COPY Data/ /APPDIR/Datta/
+COPY ./Data/ /APPDIR/Datta/
 COPY deploy.R deploy.R
 CMD Rscript deploy.R
 
