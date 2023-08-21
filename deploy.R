@@ -16,4 +16,5 @@ setAccountInfo(name = error_on_missing_name("SHINY_ACC_NAME"),
                secret = error_on_missing_name("SECRET"))
 
 # Deploy the application.
-deployApp(appName = error_on_missing_name("MASTERNAME"))
+deployApp(appName = error_on_missing_name("MASTERNAME"),
+          forceUpdate = TRUE)
