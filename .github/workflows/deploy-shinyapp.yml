@@ -1,5 +1,5 @@
 
-name: Run on push to main
+name: Deploy App
 
 # Controls when the action will run. 
 on:
