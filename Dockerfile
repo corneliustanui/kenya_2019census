@@ -6,7 +6,7 @@ COPY Scripts/0_packages.R Scripts/0_packages.R
 COPY Scripts/1.2_read_data.R Scripts/1.2_read_data.R
 COPY Scripts/2_ui.R Scripts/2_ui.R
 COPY Scripts/3_server.R Scripts/3_server.R
-COPY Data/CountyGPS.rds Data/CountyGPS.rds
+COPY Data/CountyGPS.rds CountyGPS.rds
 COPY deploy.R deploy.R
 CMD Rscript deploy.R
 
