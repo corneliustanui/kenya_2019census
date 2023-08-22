@@ -7,7 +7,6 @@
 .Renviron
 .dockerignore
 
-Data/
 Images/logo.jpg
 rsconnect/
 kenya_2019census.Rproj
