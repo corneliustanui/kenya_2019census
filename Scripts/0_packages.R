@@ -19,17 +19,10 @@ library(shinyWidgets)
 library(shinycssloaders)
 library(plotly)
 library(DT)
-library(ggplot2)
-library(ggpmisc)
-library(gmodels)
-library(magrittr)
 library(rsconnect)
-library(packrat)
-library(renv)
 
 # mapping libs
 library(sp)
 library(sf)
 library(leaflet)
-library(lwgeom)
-library(tmap)
+

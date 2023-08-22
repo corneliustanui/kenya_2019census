@@ -14,4 +14,3 @@ source("./Scripts/3_server.R")
 
 # build app
 shinyApp(ui = ui, server = server)
-
