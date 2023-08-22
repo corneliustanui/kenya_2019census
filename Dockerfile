@@ -5,6 +5,6 @@ COPY ./app.R /KPHC2019/app.R
 COPY ./deploy.R /KPHC2019/deploy.R
 
 COPY ./Scripts /KPHC2019/Scripts
-COPY ./Data/CountyGPS.rds /KPHC2019/Data/CounthyGPS.rds
+COPY ./Data/CountyGPS.rds /KPHC2019/Data/CountyGPS.rds
 
 CMD Rscript deploy.R
